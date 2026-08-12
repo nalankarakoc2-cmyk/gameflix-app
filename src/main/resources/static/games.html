@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Games - GameFlix</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html" class="logo">🎮 GAMEFLIX</a>
+
+    <div>
+        <a href="index.html">Home</a>
+        <a href="games.html">Games</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <h2>Explore Games</h2>
+<label for="search">Search Games:</label>
+<input type="text" id="search" placeholder="Search by title...">
+<button onclick="searchGames()">Search</button>
+<button onclick="loadGames()">Show All</button>
+
+<p id="message"></p>
+
+<div id="gameList" class="game-grid"></div>
+</div>
+<script>
+
+    async function loadGames() {
+        const response = await fetch("/games");
+        const games = await response.json();
+
+        displayGames(games);
+    }
+
+    async function searchGames() {
+
+        const title = document.getElementById("search").value;
+
+        if (title.trim() === "") {
+            loadGames();
+            return;
+        }
+
+        const response =
+            await fetch("/games/search?title=" + encodeURIComponent(title));
+
+        const games = await response.json();
+
+        displayGames(games);
+    }
+
+    function displayGames(games) {
+
+        const gameList = document.getElementById("gameList");
+        const message = document.getElementById("message");
+
+        gameList.innerHTML = "";
+
+        if (games.length === 0) {
+            message.textContent = "No games found.";
+            return;
+        }
+
+        message.textContent = "";
+
+        games.forEach(game => {
+
+            const gameCard = document.createElement("div");
+            gameCard.className = "game-card";
+
+            gameCard.innerHTML = `
+                <h3>${game.title}</h3>
+                <p><strong>Genre:</strong> ${game.genre}</p>
+                <p><strong>Platform:</strong> ${game.platform}</p>
+                <hr>
+            `;
+
+            gameList.appendChild(gameCard);
+        });
+    }
+
+    loadGames();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - GameFlix</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html" class="logo">🎮 GAMEFLIX</a>
+
+    <div>
+        <a href="index.html">Home</a>
+        <a href="games.html">Games</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+    </div>
+</nav>
+
+<div class="form-card">
+
+    <h2>Login</h2>
+
+    <form id="loginForm">
+
+        <label for="username">Username</label>
+        <input
+                type="text"
+                id="username"
+                placeholder="Enter username"
+                required
+        >
+
+        <label for="password">Password</label>
+        <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                required
+        >
+
+        <button type="submit" class="btn">
+            Login
+        </button>
+
+    </form>
+
+    <p id="message" class="message"></p>
+
+    <p>
+        Don't have an account?
+        <a href="register.html">Create Account</a>
+    </p>
+
+</div>
+
+<script>
+
+    document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const username =
+                document.getElementById("username").value;
+
+            const password =
+                document.getElementById("password").value;
+
+            const response = await fetch("/login", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            });
+
+            const message =
+                document.getElementById("message");
+
+            if (response.ok) {
+                message.textContent = "Login successful! Redirecting...";
+
+                setTimeout(() => {
+                    window.location.href = "games.html";
+                }, 1000);
+
+            } else {
+                message.textContent =
+                    "Login failed. Invalid username or password.";
+            }
+        });
+
+</script>
+
+</body>
+</html>
