@@ -1,104 +1,108 @@
-# GameFlix Backend
+# GameFlix
 
-GameFlix is a Spring Boot backend application that allows users to register and log in. User passwords are securely hashed using BCrypt before they are stored in the database. The project also includes JUnit 5 tests to verify that the registration and login service works correctly.
+GameFlix is a web application that I created for my software engineering project. The goal of GameFlix is to allow users to create an account, log in, explore games, and search for games they are interested in.
+
+For the final version of the project, I connected the Spring Boot backend with a simple frontend using HTML, CSS, and JavaScript.
+
+## Features
+
+The current GameFlix application includes:
+
+- User registration
+- User login
+- Duplicate username checking
+- Password hashing using BCrypt
+- Game catalog
+- Search games by title
+- Frontend pages for Home, Login, Register, and Games
 
 ## Technologies Used
 
-- Java 17
-- Spring Boot 3
+- Java
+- Spring Boot
 - Spring Data JPA
 - H2 Database
-- Spring Security (BCrypt)
+- BCrypt
+- JUnit 5
+- HTML
+- CSS
+- JavaScript
 - Maven
 - Docker
 - GitHub Actions
-- JUnit 5
 
-## API Endpoints
+## How to Run the Project
 
-### Register
+1. Open the project in IntelliJ IDEA.
+2. Run `GameFlixApplication.java`.
+3. Wait for the Spring Boot application to start.
+4. Open a browser.
+5. Go to:
 
-**POST** `/register`
+`http://localhost:8080`
 
-Creates a new user account.
+From the home page, users can explore games, register for an account, or log in.
 
-Example:
+## Game Features
 
-```json
-{
-  "username": "nalan",
-  "password": "password123"
-}
-```
+The Games page shows the games that are currently stored in the database.
 
-### Login
+Users can also search for a game by entering part of the game title. For example, searching for `mine` will return Minecraft.
 
-**POST** `/login`
+The backend includes endpoints for getting all games and searching games.
 
-Logs in an existing user.
+## Registration and Login
 
-Example:
+Users can create an account by entering a username and password.
 
-```json
-{
-  "username": "nalan",
-  "password": "password123"
-}
-```
+If the username already exists, the application will not create another account with the same username.
 
-## Run the Application
+After creating an account, the user can log in using the correct username and password. If the password or username is incorrect, the login will fail.
 
-Run with Maven:
+Passwords are hashed using BCrypt instead of being stored as plain text.
 
-```bash
-mvn clean package
-mvn spring-boot:run
-```
+## Backend Testing
 
-The application runs at:
+I used JUnit 5 to test the UserService.
 
-```
-http://localhost:8080
-```
-
-## Run with Docker
-
-Build the Docker image:
-
-```bash
-docker build -t gameflix-backend .
-```
-
-Run the container:
-
-```bash
-docker run -p 8080:8080 gameflix-backend
-```
-
-## Run the Tests
-
-Run all JUnit tests:
-
-```bash
-mvn test
-```
-
-The project includes service tests for:
+I created four tests for:
 
 - Registering a new user
-- Preventing duplicate usernames
+- Trying to register a duplicate user
 - Logging in with the correct password
-- Rejecting an incorrect password
+- Logging in with the wrong password
 
-## Docker Files
+All four tests are currently passing.
 
-### Dockerfile
+Tests can also be run using:
 
-The Dockerfile packages the Spring Boot application into a Docker image so it can run on any computer with Docker installed.
+`mvn test`
 
-### docker-compose.yml
+## Project Structure
 
-The docker-compose file starts the application container and makes it easier to run the project using a single command.
+The backend includes models, repositories, services, and controllers.
+
+The frontend files are located in:
+
+`src/main/resources/static`
+
+The frontend includes:
+
+- `index.html`
+- `login.html`
+- `register.html`
+- `games.html`
+- `css/style.css`
+
+## Future Improvements
+
+There are still many things that could be added to GameFlix in the future. Some ideas are:
+
+- Game ratings and reviews
+- Subscription options
+- More games
+- Personalized recommendations
+- Admin features for adding and managing games
 
 ## AI Usage
 
